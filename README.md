@@ -2,6 +2,11 @@
 
 A REST API for managing services and customer bookings, built with NestJS, TypeORM, and PostgreSQL as a technical assignment for the EN2H Software Engineer Intern (NestJS) role.
 
+**Live API:** https://en2h-booking-api-to69.onrender.com
+**Swagger UI:** https://en2h-booking-api-to69.onrender.com/api/docs
+
+> Deployed on Render's free tier, so the service spins down after ~15 minutes of inactivity — the first request after idling can take 30-50s to wake up.
+
 ## Project Overview
 
 The API supports:
@@ -130,8 +135,9 @@ Unit tests cover `BookingsService` (status-transition matrix, past-date rejectio
 
 ## API Documentation
 
-- **Swagger UI:** `http://localhost:3000/api/docs` (once the app is running)
-- **OpenAPI JSON:** `http://localhost:3000/api/docs-json`
+- **Live Swagger UI:** https://en2h-booking-api-to69.onrender.com/api/docs
+- **Local Swagger UI:** `http://localhost:3000/api/docs` (once the app is running)
+- **Local OpenAPI JSON:** `http://localhost:3000/api/docs-json`
 
 All endpoints are under the `/api/v1` prefix. Bearer JWT auth is documented per-endpoint in Swagger.
 
