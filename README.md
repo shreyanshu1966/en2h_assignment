@@ -104,7 +104,19 @@ npm run build && npm run start:prod
 docker compose up --build
 ```
 
-The `api` service waits for PostgreSQL's healthcheck, runs migrations, then starts the app. The API is available at `http://localhost:3000`.
+The `api` service waits for PostgreSQL's healthcheck, then runs migrations and starts the app (both are handled by the image's `docker-entrypoint.sh`, so this also works when the container is run standalone, e.g. on a hosting platform).
+
+## Deploying to Render
+
+This repo includes a [`render.yaml`](render.yaml) Blueprint that provisions both the web service (built from the `Dockerfile`) and a managed PostgreSQL database in one step:
+
+1. Push the repo to GitHub (already done if you're reading this from the remote).
+2. In the Render dashboard: **New +** → **Blueprint** → select this repository.
+3. Render reads `render.yaml` and creates the `en2h-postgres` database and `en2h-booking-api` web service together, wiring the `DB_*` env vars from the database automatically and generating random values for `JWT_SECRET`/`JWT_REFRESH_SECRET`.
+4. On deploy, the container's entrypoint runs `npm run migration:run:prod` against the managed database before starting the app — no manual migration step needed.
+5. Once live, the API is reachable at the Render-assigned URL, with Swagger at `<url>/api/docs`.
+
+`PORT` is intentionally left unset in `render.yaml` — Render injects its own `PORT` at runtime, and `main.ts` already reads `process.env.PORT` with a local fallback of `3000`.
 
 ## Running Tests
 

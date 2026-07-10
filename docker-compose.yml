@@ -39,7 +39,6 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-    command: sh -c "npm run migration:run:prod && node dist/main"
 
 volumes:
   postgres_data:

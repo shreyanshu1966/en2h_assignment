@@ -1,0 +1,42 @@
+databases:
+  - name: en2h-postgres
+    plan: free
+    databaseName: en2h_booking
+    user: en2h
+
+services:
+  - type: web
+    name: en2h-booking-api
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    healthCheckPath: /api/v1
+    envVars:
+      - key: DB_HOST
+        fromDatabase:
+          name: en2h-postgres
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: en2h-postgres
+          property: port
+      - key: DB_USERNAME
+        fromDatabase:
+          name: en2h-postgres
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: en2h-postgres
+          property: password
+      - key: DB_NAME
+        fromDatabase:
+          name: en2h-postgres
+          property: database
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_REFRESH_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: 15m
+      - key: JWT_REFRESH_EXPIRES_IN
+        value: 7d
