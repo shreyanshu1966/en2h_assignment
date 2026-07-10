@@ -28,3 +28,6 @@ Thumbs.db
 
 # swap
 *.swp
+
+# doc source files (only rendered PDFs are committed)
+docs/*.html
